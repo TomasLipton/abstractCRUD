@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+    {% include '/parts/head.twig' %}
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+{% include '/parts/header.twig' %}
+
+<div class="app-body">
+    {% include '/parts/sidebar.twig' %}
+
+    <!-- Main content -->
+    <main class="main">
+
+        <div class="container-fluid">
+            <div class="card card-accent-info" style="margin-top: 25px">
+                <div class="card-header">
+                    {{ title }}
+                        <button type="button" class="btn btn-success btn-sm btn-success" data-toggle="modal" data-target="#myModal" style="float: right;position: relative;top: 2px;">
+                            Добавить запись
+                        </button>
+
+                </div>
+                <div class="card-body" style="overflow-x: scroll;">
+                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            {% for col in cols %}
+                                <th style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" title="{{ col.column_comment }}">{{ col.column_comment|raw }}</th>
+                            {% endfor %}
+                            <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in items %}
+                            <tr>
+                                {% for col in cols %}
+                                    <td>{{ cycle(item, loop.index0) }}</td>
+                                {% endfor %}
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button data-toggle="modal" data-target="#edit{{ item.0 }}" type="button" class="btn  btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        <button data-toggle="modal" data-target="#delete{{ item.0 }}" style="" type="button" class="btn btn-outline-danger" ><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="edit{{ item.0 }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Редактировать {{ title|lower }}</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/{{ table }}/update/" method="post">
+                                                {% for col in cols|slice(1) %}
+                                                    <div class="form-group">
+                                                        <label for="name">{{ col.column_comment }}</label>
+                                                        <input type="text" name="{{ col.column_name }}" class="form-control" id="{{ col.column_name }}" value="{{ cycle(item, loop.index) }}" placeholder="{{ col.column_comment }}">
+                                                        <input type="text" name="id"  value="{{ cycle(item, loop.0) }}" style="display: none">
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-secondary" data-dismiss="modal" />Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <div class="modal fade" id="delete{{ item.0 }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Удалить {{ title|lower }}</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Точно????</p>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-danger"  onclick="location.href = '/{{ table }}/delete/?id={{ item.0 }}';" />Удалить</button>
+                                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Добавить {{ title|lower }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/{{ table }}/add/" method="post">
+                                        {% for col in cols|slice(1) %}
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="name">{{ col.column_comment }}</label>
+                                                    <input type="text" name="{{ col.column_name }}" class="form-control" id="{{ col.column_name }}" placeholder="{{ col.column_comment }}">
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-secondary" data-dismiss="modal" />Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.conainer-fluid -->
+    </main>
+
+</div>
+
+{% include '/parts/footer.twig' %}
+{% include '/parts/scripts.twig' %}
+{% include '/parts/dataTable.twig' %}
+
+</body>
+</html>

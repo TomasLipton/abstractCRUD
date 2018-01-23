@@ -1,0 +1,22 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-title">
+                Таблицы
+            </li>
+            {% for item in sidebar %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/{{ item.TABLE_NAME|capitalize }}/">{{ item.TABLE_COMMENT }}</a>
+                </li>
+            {% endfor %}
+
+            {#<li class="nav-title">#}
+                {#Пользователи#}
+            {#</li>#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="#">Все пользователи</a>#}
+            {#</li>#}
+        </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>

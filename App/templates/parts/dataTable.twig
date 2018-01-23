@@ -1,0 +1,33 @@
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "oLanguage": {
+                "sEmptyTable":     "Записей не найдено",
+                "sInfo":           "Показано с _START_ по _END_ из _TOTAL_",
+                "sInfoEmpty":      "Показано с 0 по 0 из 0",
+                "sInfoFiltered":   "(отфильтровано из _MAX_ записей)",
+                "sInfoPostFix":    "",
+                "sInfoThousands":  ",",
+                "sLengthMenu":     "Показать _MENU_ записей",
+                "sLoadingRecords": "Загрузка...",
+                "sProcessing":     "Обработка...",
+                "sSearch":         "",
+                "sZeroRecords":    "Записей не найдено",
+                "oPaginate": {
+                    "sFirst":    "Первая",
+                    "sLast":     "Последняя",
+                    "sNext":     "Вперед",
+                    "sPrevious": "Назад"
+                }
+            },
+            "stateSave": true,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "Все"]
+            ],
+            "responsive": true
+        });
+    } );
+</script>
