@@ -1,6 +1,6 @@
 <?php
 
-$vendor =  __DIR__ . '/App/vendor/autoload.php';
+$vendor =  __DIR__ . '/vendor/autoload.php';
 if (is_readable($vendor)){
     include $vendor;
 }
