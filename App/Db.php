@@ -8,7 +8,7 @@ class Db
 
     use Singleton;
 
-    const DB_NAME = 'psychoan_zavod';
+    const DB_NAME = 'psychoan_avgust';
 
     protected $dbh;
 
@@ -17,8 +17,8 @@ class Db
         try {
             $this->dbh = new \PDO(
                 'mysql:host=localhost;dbname=' . self::DB_NAME,
-                'root',
-                '',
+                'psychoan_avgust',
+                '4D+MUR0d7.FN{obr=k',
                 array(
                     \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 )
